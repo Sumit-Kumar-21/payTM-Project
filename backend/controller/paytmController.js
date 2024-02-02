@@ -1,6 +1,6 @@
-import { checkSignUp, checkSignIn,checkUpdate } from "../zod/paytmZod";
-import { User } from "../models/paytmModel";
-import { JWT_SECRET } from "../JWT/config";
+const { checkSignUp, checkSignIn,checkUpdate } = require("../zod/paytmZod");
+const { Account, User } = require("../models/paytmModel");
+const { JWT_SECRET } = require("../JWT/config");
 const jwt = require('jsonwebtoken');
 
 const handleSignUpReq= async(req,res)=>{
@@ -8,7 +8,7 @@ const handleSignUpReq= async(req,res)=>{
     const body = req.body;
     // check the user input is valid or not
     const checked = checkSignUp.safeParse(body);
-    if(!checked.sucess){
+    if(!checked.success){
         return res.status(411).json({
             message: "Email already taken / Incorrect inputs"
         })
@@ -36,8 +36,16 @@ const handleSignUpReq= async(req,res)=>{
     //create jwt token
     const token = jwt.sign({
         userId
-    }, JWT_SECRET)
-    return res.status(200).json({
+    }, JWT_SECRET);
+
+    res.setHeader('Authorization', `Bearer ${token}`)
+
+    await Account.create({
+        userId: userId,
+        balance: 1+ Math.floor(Math.random()*1000)
+    });
+
+    res.status(200).json({
         message: "User created successfully",
         token: token
     })
@@ -47,8 +55,8 @@ const handleSignInReq= async(req,res)=>{
 
     const body = req.body;
     //check the user input is valid or not
-    const { sucess }= checkSignIn.safeParse(body); // zod always return an object which contain sucess and data that's why i use {sucess} to direct catch "true or false".
-    if(!sucess){
+    const { success }= checkSignIn.safeParse(body); // zod always return an object which contain success and data that's why i use {success} to direct catch "true or false".
+    if(!success){
         return res.status(411).json({
             message: "Invalid Input"
         })
@@ -57,7 +65,7 @@ const handleSignInReq= async(req,res)=>{
     // check user is exist or not
     const isUserExist = await User.findOne({
         username: body.username,
-        password: req.body.password
+        password: body.password
     })
     
     if(!isUserExist){
@@ -71,10 +79,12 @@ const handleSignInReq= async(req,res)=>{
     //create token
     const token = jwt.sign({
         userId
-    }, JWT_SECRET)
+    }, JWT_SECRET);
+    
+    res.setHeader('Authorization', `Bearer ${token}`);
 
     return res.status(400).json({
-        message: 'Sign',
+        message: 'Sign in',
         token: token
     })
 
@@ -84,8 +94,8 @@ const handleModifyReq= async(req,res)=>{
 
     const body = req.body;
     // check the valid input
-    const { sucess } = checkUpdate.safeParse(body);
-    if(!sucess){
+    const { success } = checkUpdate.safeParse(body);
+    if(!success){
         return res.status(411).json({
             message: "Input isn't match the basic requirement"
         })
@@ -94,11 +104,11 @@ const handleModifyReq= async(req,res)=>{
     await User.findByIdAndUpdate(userId, body);
 
     return res.status(200).json({
-        message: "Update sucessfully"
+        message: "Update successfully"
     })
 }
 
-export const handleBulkreq = async(req,res)=>{
+const handleBulkreq = async(req,res)=>{
     //?filter=...
     const search = req.query.filter || "";
 
@@ -124,7 +134,7 @@ export const handleBulkreq = async(req,res)=>{
     })
 }
 
-export {
+module.exports = {
     handleModifyReq,
     handleSignInReq,
     handleSignUpReq,

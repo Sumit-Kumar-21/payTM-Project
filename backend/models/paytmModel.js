@@ -1,18 +1,17 @@
-import mongoose from "mongoose"
+const mongoose = require("mongoose");
 
-const userSchema = mongoose.Schema({
+const userSchema = new mongoose.Schema({
     username: {
         type: String,
         required: true,
         unique: true,
         lowercase: true,
         minLength: 5,
-        maxLength: 20,
         trim: true
     },
 
     password: {
-        typer: String,
+        type: String,
         required: true,
         minLength: 6,
     },
@@ -32,11 +31,9 @@ const userSchema = mongoose.Schema({
     }
 })
 
-export const User = mongoose.model("Users", userSchema);
-
-const accountSchema = mongoose.Schema({
+const accountSchema = new mongoose.Schema({
     userId:{
-        typer: mongoose.Schema.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
         required: true
     },
@@ -45,4 +42,11 @@ const accountSchema = mongoose.Schema({
         required: true
     }
 })
-export const account = mongoose.model("account", accountSchema)
+
+const Account = mongoose.model("Account", accountSchema)
+const User = mongoose.model("Users", userSchema);
+
+module.exports= {
+    Account,
+    User
+}

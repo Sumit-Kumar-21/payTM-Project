@@ -1,1 +1,5 @@
-export const JWT_SECRET = "sumitSecret";
+const JWT_SECRET = "sumitSecret";
+
+module.exports={
+    JWT_SECRET
+}

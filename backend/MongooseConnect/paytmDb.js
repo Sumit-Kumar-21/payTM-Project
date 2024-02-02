@@ -1,7 +1,8 @@
-import mongoose from "mongoose";
+const mongoose = require("mongoose") ;
 
-export const dataBaseConnect = (url)=>{
+const dataBaseConnect = (url)=>{
 
     mongoose.connect(url).then(()=>console.log("DataBase Connected"));
 }
 
+module.exports = {dataBaseConnect};

@@ -1,11 +1,13 @@
-import express from "express";
-import userRouter from "./user"
+const express = require("express");
+const userRouter = require("./user");
+const accountRouter = require("./account");
 
-const app = express();
 const router = express.Router();
 
+console.log("enter here");
 // userRouter middleware
-app.use("/user", userRouter)
+router.use("/user", userRouter);
+router.use("/account", accountRouter);
 
 
-export default router;
+module.exports= router;

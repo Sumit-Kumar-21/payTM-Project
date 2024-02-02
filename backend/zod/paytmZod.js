@@ -1,19 +1,25 @@
-const zod = reqioer("zod");
+const zod = require("zod");
 
-export const checkSignUp = zod.object({
-    username: zod.string().email().min(5).max(20),
+const checkSignUp = zod.object({
+    username: zod.string().email().min(5),
     password: zod.string().min(6),
     firstname: zod.string().max(10),
     lastname: zod.string().max(10)
 })
 
-export const checkSignIn = zod.object({
-    username: zod.string().email().min(5).max(20),
+const checkSignIn = zod.object({
+    username: zod.string().email().min(5),
     password: zod.string().min(6),
 })
 
-export const checkUpdate = zod.object({
+const checkUpdate = zod.object({
     password: zod.string().min(6),
     firstname: zod.string().max(10),
     lastname: zod.string().max(10)
 })
+
+module.exports={
+    checkSignIn,
+    checkSignUp,
+    checkUpdate
+}

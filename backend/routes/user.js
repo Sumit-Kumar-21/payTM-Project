@@ -1,8 +1,8 @@
-import { Router } from "express";
-import { authMiddleware } from "../middleware/middleware";
-import { handleBulkreq, handleModifyReq, handleSignInReq, handleSignUpReq } from "../controller/paytmController";
+const express = require("express");
+const { authMiddleware } = require("../middleware/middleware");
+const { handleBulkreq, handleModifyReq, handleSignInReq, handleSignUpReq } = require("../controller/paytmController");
 
-const router = Router();
+const router = express.Router();
 
 router.post("/signup", handleSignUpReq)
 
@@ -12,4 +12,4 @@ router.put("/modify", authMiddleware, handleModifyReq)
 
 router.get("/bulk", handleBulkreq)
 
-export default router;
+module.exports=router;
