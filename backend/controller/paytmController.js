@@ -83,7 +83,7 @@ const handleSignInReq= async(req,res)=>{
     
     res.setHeader('Authorization', `Bearer ${token}`);
 
-    return res.status(400).json({
+    return res.status(200).json({
         message: 'Sign in',
         token: token
     })

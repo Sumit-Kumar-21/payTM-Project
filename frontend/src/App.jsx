@@ -1,6 +1,8 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import SignUp from './UIcomponent/SignUp'
-import SignIn from './UIcomponent/SignIn'
+import SignUp from './components/UI-components/SignUp'
+import SignIn from './components/UI-components/SignIn'
+import DashBoard from './components/UI-components/DashBoard'
+import Send from './components/UI-components/Send'
 
 function App() {
 
@@ -8,10 +10,10 @@ function App() {
     <>
       <BrowserRouter>
         <Routes>
-          <Route path='/' element={<SignIn/>} />
-          {/* <Route path='/signup' element={<SignUp/>} />
-          <Route path='/dashboard' element={<Dashboard/>} />
-          <Route path='/send' element={<Send/>} /> */}
+          <Route path='/signin' element={<SignIn/>} />
+          <Route path='/signup' element={<SignUp/>} />
+          <Route path='/dashboard' element={<DashBoard/>} />
+          <Route path='/send' element={<Send/>} />
         </Routes>
       </BrowserRouter>
     </>
