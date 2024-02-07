@@ -111,15 +111,15 @@ const handleModifyReq= async(req,res)=>{
 const handleBulkreq = async(req,res)=>{
     //?filter=...
     const search = req.query.filter || "";
-
-    const users = User.find({
+    const users = await User.find({
         $or:[{
             firstname:{
-                "$regex": search
+                "$regex": new RegExp(search, "i")
             }
         },{
             lastname:{
-                "$regex": search
+                "$regex": new RegExp(search, "i")
+
             }
         }]
     })

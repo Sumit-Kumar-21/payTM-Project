@@ -5,6 +5,7 @@ import InputBox from '../small-components/InputBox'
 import ButtonWarning from '../small-components/ButtonWarning'
 import { useState } from 'react'
 import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
 
 function SignUp() {
 
@@ -12,6 +13,7 @@ function SignUp() {
     const [lastname, setLastname]= useState('');
     const [username, setUsername]= useState('');
     const [password, setPassword]= useState('');
+    const navigate = useNavigate();
 
 
 
@@ -40,13 +42,19 @@ function SignUp() {
             
             <div>
                 <Buttom onClick={async()=>{
-                    const res = await axios.post("http://localhost:3000/api/v1/user/signup", {
+                    await axios.post("http://localhost:3000/api/v1/user/signup", {
                         username: username,
                         password: password,
                         firstname: firstname,
                         lastname: lastname
+                    }).then(function (res) {
+                        localStorage.setItem("token", `Bearer ${res.data.token}`);
+                        navigate('/dashboard');
+                    })
+                    .catch(function () {
+                        alert("Error 400:Invalid UserName/Password or Email already exist");
                     });
-                    localStorage.setItem("token", `Barear ${res.data.token}`)
+                    
                 }} label={"Sign Up"} />
                 <ButtonWarning label={"Already have an account?"} buttonText={"Sign Up"} to={'/signin'}/>
             </div>

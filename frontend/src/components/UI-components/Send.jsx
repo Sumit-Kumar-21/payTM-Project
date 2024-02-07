@@ -1,6 +1,15 @@
+import axios from "axios";
 import Heading from "../small-components/Heading";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { useState } from "react";
 
 function Send() {
+  const [searchParams] = useSearchParams();
+  const [amount, setAmount]= useState(0);
+  const userId = searchParams.get("Uid");
+  const fullname = searchParams.get("name");
+  const navigate = useNavigate()
+
   return (
     <div className="flex justify-center h-screen bg-gray-100">
       <div className="h-full flex flex-col justify-center">
@@ -11,15 +20,17 @@ function Send() {
           <div className="">
             <div className="flex items-center space-x-4">
               <div className="w-12 h-12 rounded-full bg-purple-700 flex items-center justify-center">
-                <span className="text-2xl text-white">A</span>
+                <span className="text-2xl text-white">
+                  {fullname.charAt(0)}
+                </span>
               </div>
-              <h3 className="text-2xl font-semibold">Friend's Name</h3>
+              <h3 className="text-2xl font-semibold">{fullname}</h3>
             </div>
             <div className="space-y-4">
               <div className="space-y-2">
                 <label
                   className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  for="amount"
+                  htmlFor="amount"
                 >
                   Amount (in Rs)
                 </label>
@@ -28,9 +39,28 @@ function Send() {
                   className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
                   id="amount"
                   placeholder="Enter amount"
+                  onChange={(e)=>{
+                    setAmount(e.target.value)
+                  }}
                 />
               </div>
-              <button className="justify-center rounded-md text-sm font-medium ring-offset-background transition-colors h-10 px-4 py-2 w-full bg-green-500 text-white">
+              <button
+                onClick={() => {
+                  axios.post('http://localhost:3000/api/v1/account/transfer',{
+                    to: userId,
+                    amount: amount
+                  },{
+                    headers: {
+                      Authorization: localStorage.getItem('token')
+                    }
+                  }).then(()=>{
+                    navigate('/success')
+                  }).catch(()=>{
+                    navigate('/fail')
+                  });
+                }}
+                className="justify-center rounded-md text-sm font-medium ring-offset-background transition-colors h-10 px-4 py-2 w-full bg-green-500 text-white"
+              >
                 Initiate Transfer
               </button>
             </div>

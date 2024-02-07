@@ -5,12 +5,14 @@ import InputBox from '../small-components/InputBox'
 import ButtonWarning from '../small-components/ButtonWarning'
 import { useState } from 'react'
 import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
 
 
 function SignIn() {
 
     const [password, setPassword]=useState('')
     const [username, setUsername]=useState('')
+    const navigate = useNavigate();
 
     return <div className="flex justify-center bg-zinc-500 bg-auto h-screen">
         <div className="flex flex-col rounded-lg bg-white mb-auto mt-auto shadow-lg shadow-black pt-7 pb-7 w-80 gap-4 pl-5 pr-5">
@@ -28,11 +30,16 @@ function SignIn() {
 
             <div className="flex flex-col">
                 <Button onClick={async()=>{
-                    const res= await axios.post("http://localhost:3000/api/v1/user/signin", {
+                    await axios.post("http://localhost:3000/api/v1/user/signin", {
                         username: username,
                         password: password
+                    }).then(function (res) {
+                        localStorage.setItem("token", `Bearer ${res.data.token}`);
+                        navigate('/dashboard');
+                    })
+                    .catch(function (error) {
+                        alert("Error 400:Invalid UserName/Password");
                     });
-                    localStorage.setItem("token", `Barear ${res.data.token}`)
                 }} label={"Sign In"} />
                 <ButtonWarning label={"Don't have an account?"} buttonText={"Sign Up"} to={'/signup'}/>
             </div>
