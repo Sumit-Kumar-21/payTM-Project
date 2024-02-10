@@ -1,8 +1,10 @@
 const express = require("express");
 const { authMiddleware } = require("../middleware/middleware");
-const { handleBulkreq, handleModifyReq, handleSignInReq, handleSignUpReq } = require("../controller/paytmController");
+const { handleBulkreq, handleModifyReq, handleSignInReq, handleSignUpReq, handleGetUserreq } = require("../controller/paytmController");
 
 const router = express.Router();
+
+router.get("/get", authMiddleware, handleGetUserreq)
 
 router.post("/signup", handleSignUpReq)
 

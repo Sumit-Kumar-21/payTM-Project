@@ -3,10 +3,13 @@ import AppBar from "../small-components/AppBar";
 import Balance from "../small-components/Balance";
 import Users from "../small-components/Users";
 import axios from "axios";
+import useGetUser from "../hooks/useGetUser";
 
 function DashBoard() {
 
     const [balance, setBalance]=useState("XXXX");
+    const {user, verify} =useGetUser()
+
     const fetch = async()=>{
         await axios.get("http://localhost:3000/api/v1/account/balance",{
             headers: {
@@ -22,13 +25,16 @@ function DashBoard() {
     },[balance])
 
   return (
-    <div className="h-screen ">
-      <AppBar />
+    <>
+    {verify&& <div className="h-screen ">
+      <AppBar user={user}/>
       <Balance
         value={balance}
       />
-      <Users />
-    </div>
+      <Users userid={user._id}/>
+    </div>}
+    </>
+    
   );
 }
 export default DashBoard;

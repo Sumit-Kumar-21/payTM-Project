@@ -24,19 +24,19 @@ function SignUp() {
                 <SubHeading label={"Enter your infromation to create an account"} />
             </div>
 
-            <InputBox onChange={(e)=>{
+            <InputBox type={"text"} onChange={(e)=>{
                 setFirstname(e.target.value);
             }} label={"First Name"} placeholder={"Enter first name here"}/>
 
-            <InputBox onChange={(e)=>{
+            <InputBox type={"text"} onChange={(e)=>{
                 setLastname(e.target.value)
             }} label={"Last Name"} placeholder={"Enter last name here"}/>
 
-            <InputBox onChange={(e)=>{
+            <InputBox type={email} onChange={(e)=>{
                 setUsername(e.target.value)
             }} label={"Email"} placeholder={"Enter e-mail here"}/>
 
-            <InputBox onChange={(e)=>{
+            <InputBox type={"password"} onChange={(e)=>{
                 setPassword(e.target.value)
             }} label={"Password"} placeholder={"Enter password here"}/>
             

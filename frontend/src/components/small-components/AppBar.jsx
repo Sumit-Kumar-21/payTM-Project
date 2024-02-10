@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 
-function AppBar() {
+function AppBar({user}) {
     const navigate = useNavigate()
   return (
     <div className="flex justify-between border items-center shadow pl-5 pr-5 h-16">
@@ -19,7 +19,7 @@ function AppBar() {
           Sign Out
         </button>
         <div className="rounded-full bg-purple-800 h-12 w-12 flex flex-col justify-center text-center text-2xl text-white">
-          U
+          {user.firstname.charAt(0)}
         </div>
       </div>
     </div>

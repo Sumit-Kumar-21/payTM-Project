@@ -134,9 +134,25 @@ const handleBulkreq = async(req,res)=>{
     })
 }
 
+const handleGetUserreq= async (req, res)=>{
+    const user = await User.findById(req.userId);
+
+    return res.status(200).json({
+        user: {
+            username: user.username,
+            firstname: user.firstname,
+            lastname: user.lastname,
+            _id: user._id
+        }
+    });
+
+    
+}
+
 module.exports = {
     handleModifyReq,
     handleSignInReq,
     handleSignUpReq,
-    handleBulkreq
+    handleBulkreq,
+    handleGetUserreq
 }

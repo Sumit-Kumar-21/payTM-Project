@@ -3,7 +3,7 @@ import Button from "../small-components/Button"
 import axios from "axios";
 import { useNavigate } from "react-router-dom"
 
-function Users() {
+function Users({userid}) {
     const [users, setUser]=useState([]);
 
     const [search, setSearch]= useState('')
@@ -30,7 +30,7 @@ function Users() {
         <div className="font-bold text-xl">Users</div>
         <input type="text" placeholder="Search users..." onChange={handleSearch} className="border rounded shadow-lg w-full p-2 border-slate-200" />
 
-        {users.map((user)=> <User user={user}/>)}
+        {users.map((user)=> {return user._id!=userid && <User user={user}/>})}
 
     </div>;
 }

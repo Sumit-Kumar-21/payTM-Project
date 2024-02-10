@@ -21,10 +21,10 @@ function SignIn() {
                 <SubHeading label={"Enter your credentials to create an account"} />
             </div>
             
-            <InputBox onChange={e=>{
+            <InputBox type={"email"} onChange={e=>{
                 setUsername(e.target.value)
             }} label={"Email"} placeholder={"Enter e-mail here"}/>
-            <InputBox onChange={e=>{
+            <InputBox type={"password"} onChange={e=>{
                 setPassword(e.target.value)
             }} label={"Password"} placeholder={"Enter password here"}/>
 
