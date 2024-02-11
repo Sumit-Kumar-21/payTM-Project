@@ -3,24 +3,29 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 
 const useGetUser= ()=>{
   const [user, setUser] = useState({});
-  const [verify, setVerify] = useState(false);
+  const [verify, setVerify] = useState(undefined);
+  const [error, setError]= useState();
 
   useEffect(() => {
-    try {
-      axios
-        .get("http://localhost:3000/api/v1/user/get", {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get("http://localhost:3000/api/v1/user/get", {
           headers: {
             Authorization: localStorage.getItem("token"),
           },
-        })
-        .then((res) => {
-          setUser(res.data.user);
-          setVerify(true);
         });
-    } catch (error) {
-        return {user, verify}
-    }
+        setUser(response.data.user);
+        setVerify(true);
+      } catch (error) {
+        setVerify(false);
+        setError(error);
+        return {user, verify};
+      }
+    };
+
+    fetchData();
   }, []);
+
   return { user, verify};
 }
 

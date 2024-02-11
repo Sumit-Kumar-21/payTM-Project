@@ -30,7 +30,7 @@ function Users({userid}) {
         <div className="font-bold text-xl">Users</div>
         <input type="text" placeholder="Search users..." onChange={handleSearch} className="border rounded shadow-lg w-full p-2 border-slate-200" />
 
-        {users.map((user)=> {return user._id!=userid && <User user={user}/>})}
+        {users.map((user)=> {return user._id!=userid && <User key={user._id} user={user}/>})}
 
     </div>;
 }

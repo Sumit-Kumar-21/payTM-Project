@@ -12,7 +12,20 @@ import { useEffect, useRef, useState } from 'react'
 function App() {
 
   const {verify}= useGetUser()
-  console.log(verify)
+  const [loading, setLoading]= useState(true)
+  
+  useEffect(()=>{
+    if (verify!==undefined) {
+      setLoading(false)
+    }  
+  },[verify])
+
+  console.log(`verify is ${verify}`);
+  console.log(`loading is ${loading}`);
+
+  if (loading) {
+    return <div></div>
+  }
 
   return (
     <>
