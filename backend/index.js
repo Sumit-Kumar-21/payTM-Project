@@ -13,7 +13,7 @@ app.use(cors());
 app.use(express.json());
 
 //connect database
-dataBaseConnect("mongodb+srv://sumit21:Sumit41441@cluster0.kpmct6i.mongodb.net/payTM");
+dataBaseConnect("mongodb+srv://sumit21:******@cluster0.kpmct6i.mongodb.net/payTM");
 
 // route middleware
 app.use("/api/v1", rootRouter)
